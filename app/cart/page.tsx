@@ -220,7 +220,7 @@ export default function CartPage() {
               </span>
             </div>
 
-            <button
+            {/* <button
               disabled={!hasItems}
               className={`w-full mt-2 rounded-md py-2.5 text-sm font-medium ${
                 hasItems
@@ -234,7 +234,16 @@ export default function CartPage() {
               }}
             >
               PROCEED TO CHECKOUT
-            </button>
+            </button> */}
+            <Link
+              href={hasItems ? "/checkout" : "#"}
+              className={`block w-full mt-2 rounded-md py-2.5 text-center text-sm font-medium ${hasItems
+                  ? "bg-amber-500 text-slate-950 hover:bg-amber-400"
+                  : "bg-slate-700 text-slate-400 cursor-not-allowed pointer-events-none"
+                }`}
+            >
+              PROCEED TO CHECKOUT
+            </Link>
           </div>
 
           {/* APPLY COUPON (UI only for now) */}
