@@ -16,10 +16,19 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <div className="h-9 w-9 rounded-full bg-amber-500" />
             <div>
-              <h1 className="font-semibold text-lg">Your Brand Name</h1>
-              <p className="text-xs text-slate-400">
+              {/* <h1 className="font-semibold text-lg">Your Brand Name</h1> */}
+              <h1 className="font-semibold text-lg tracking-wide">
+                <span className="text-amber-400">Swa</span>
+                <span className="text-slate-100">Vin</span>
+                <span className="text-amber-300"> Foods</span>
+              </h1>
+              {/*  <p className="text-xs text-slate-400">
                 Spices • Oils • Eco Paper Products
+              </p> */}
+              <p className="text-[11px] text-slate-400 tracking-wide">
+                Premium Spices • Cold-Pressed Oils • Eco-Friendly Paperware
               </p>
+
             </div>
           </div>
           <nav className="hidden md:flex gap-6 text-sm text-slate-300">
@@ -314,7 +323,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-slate-800 py-4 text-center text-[11px] text-slate-500">
-        © {new Date().getFullYear()} Your Brand Name. All rights reserved.
+        © {new Date().getFullYear()} SwaVin Foods. All rights reserved.
       </footer>
     </main>
   );
