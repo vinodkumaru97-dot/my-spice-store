@@ -11,9 +11,9 @@ type CartState = {
   totalItems: number;
   totalPrice: number;
   addItem: (product: Product) => void;
-  removeItem: (productId: string) => void;
   increment: (productId: string) => void;
   decrement: (productId: string) => void;
+  removeItem: (productId: string) => void;
   clearCart: () => void;
 };
 
@@ -42,19 +42,11 @@ export const useCartStore = create<CartState>((set, get) => ({
     });
   },
 
-  removeItem: (productId) => {
-    const newItems = get().items.filter((i) => i.id !== productId);
-    set({
-      items: newItems,
-      totalItems: newItems.reduce((sum, i) => sum + i.quantity, 0),
-      totalPrice: newItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
-    });
-  },
-
   increment: (productId) => {
     const newItems = get().items.map((i) =>
       i.id === productId ? { ...i, quantity: i.quantity + 1 } : i
     );
+
     set({
       items: newItems,
       totalItems: newItems.reduce((sum, i) => sum + i.quantity, 0),
@@ -74,6 +66,15 @@ export const useCartStore = create<CartState>((set, get) => ({
       items: updated,
       totalItems: updated.reduce((sum, i) => sum + i.quantity, 0),
       totalPrice: updated.reduce((sum, i) => sum + i.price * i.quantity, 0),
+    });
+  },
+
+  removeItem: (productId) => {
+    const newItems = get().items.filter((i) => i.id !== productId);
+    set({
+      items: newItems,
+      totalItems: newItems.reduce((sum, i) => sum + i.quantity, 0),
+      totalPrice: newItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
     });
   },
 
