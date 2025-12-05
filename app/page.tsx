@@ -1,54 +1,12 @@
+"use client";
+
+import Link from "next/link";
+import CartButton from "../components/CartButton";
+import { productCategories } from "../lib/products";
+import { useCartStore } from "../store/cart-store";
+
 export default function Home() {
-  const products = [
-    {
-      category: "Spices",
-      items: [
-        {
-          name: "Turmeric Powder",
-          description:
-            "High-curcumin turmeric powder, perfect for curries and immunity drinks.",
-          price: "₹120 / 250g",
-        },
-        {
-          name: "Red Chilli Powder",
-          description:
-            "Bold color and flavor, made from sun-dried chillies.",
-          price: "₹150 / 250g",
-        },
-      ],
-    },
-    {
-      category: "Oils",
-      items: [
-        {
-          name: "Cold-Pressed Groundnut Oil",
-          description: "Unrefined, cold-pressed oil for everyday Indian cooking.",
-          price: "₹260 / 1L",
-        },
-        {
-          name: "Cold-Pressed Sesame Oil",
-          description: "Traditional flavour, ideal for chutneys and pickles.",
-          price: "₹320 / 1L",
-        },
-      ],
-    },
-    {
-      category: "Paper Cups & Plates",
-      items: [
-        {
-          name: "Paper Cups 200 ml (100 pcs)",
-          description: "Sturdy, leak-resistant cups for tea, coffee and juice.",
-          price: "₹120 / 100 pcs",
-        },
-        {
-          name: "Paper Plates 10 inch (50 pcs)",
-          description:
-            "Disposable, food-grade plates for parties and catering.",
-          price: "₹150 / 50 pcs",
-        },
-      ],
-    },
-  ];
+  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50">
@@ -75,12 +33,15 @@ export default function Home() {
               Contact
             </a>
           </nav>
-          <a
-            href="#contact"
-            className="text-sm bg-amber-500 text-slate-950 px-4 py-2 rounded-full font-medium hover:bg-amber-400"
-          >
-            Enquire Now
-          </a>
+          <div className="flex items-center gap-3">
+            <CartButton />
+            <a
+              href="#contact"
+              className="text-sm bg-amber-500 text-slate-950 px-4 py-2 rounded-full font-medium hover:bg-amber-400"
+            >
+              Enquire Now
+            </a>
+          </div>
         </div>
       </header>
 
@@ -177,15 +138,15 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 md:gap-8">
-          {products.map((group) => (
-            <div key={group.category} className="space-y-3">
+          {productCategories.map((group) => (
+            <div key={group.id} className="space-y-3">
               <h4 className="text-lg font-semibold text-amber-300">
-                {group.category}
+                {group.name}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {group.items.map((item) => (
                   <div
-                    key={item.name}
+                    key={item.id}
                     className="border border-slate-800/80 bg-slate-900/60 rounded-2xl p-4 flex flex-col justify-between"
                   >
                     <div>
@@ -197,15 +158,35 @@ export default function Home() {
                       </p>
                     </div>
                     <div className="mt-3 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-amber-300">
-                        {item.price}
-                      </p>
-                      <a
-                        href="#contact"
-                        className="text-xs border border-amber-400/70 text-amber-300 rounded-full px-3 py-1 hover:bg-amber-400 hover:text-slate-950"
-                      >
-                        Enquire
-                      </a>
+                      <div className="text-sm">
+                        <p className="font-semibold text-amber-300">
+                          ₹{item.price}
+                        </p>
+                        <p className="text-[11px] text-slate-400">
+                          Pack: {item.unit}
+                        </p>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => addItem(item)}
+                          className="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-full px-3 py-1 font-medium"
+                        >
+                          Add to cart
+                        </button>
+                        <a
+                          href="#contact"
+                          className="text-[11px] text-amber-300 hover:text-amber-200"
+                        >
+                          Bulk enquiry
+                        </a>
+                        <Link
+                          href={`/product/${item.id}`}
+                          className="text-[11px] text-blue-300 hover:text-blue-200"
+                        >
+                          View details →
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 ))}
